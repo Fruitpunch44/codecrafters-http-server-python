@@ -14,20 +14,24 @@ def main():
         client_sock, client_addr = server_socket.accept()
         print(f'{client_sock} connected to port')
 
-        request = client_sock.recv(4096).decode().split(" ")
+        request = client_sock.recv(4096).decode()
+        # debugging purposes
         print(f'{request}')
         response = b'HTTP/1.1 200 OK\r\n\r\n'
 
         # exit loop if no request is gotten
         if not request:
             break
-        print(f'{request}')
-        if request[1]!= "/":
+
+        if request[1].split(' ') != "/":
             client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
-        elif request[1]=="/":
+        elif request[1].split(' ') == "/":
             client_sock.sendall(response)
+        elif request.startswith('/echo/abc'):
+            client_sock.sendall(response)
+
         else:
-            print("nothing")
+            print("invalid format")
 
 
 if __name__ == "__main__":
