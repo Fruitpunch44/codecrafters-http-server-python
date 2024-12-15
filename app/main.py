@@ -28,8 +28,8 @@ def main():
 
         elif request[1] == "/":
             client_sock.sendall(response)
-        elif request[1] == '/echo/':
-            value = request.split("/echo/")[1]
+        elif request[1].startswith('/echo/'):
+            value = request[:6]
             print(value)
             response = f'HTTP/1.1 200 OK\r\nContent-Type: {value}\r\nContent-Length:f{len(value)}\r\n\r\nabc'
             client_sock.send(response.encode())
