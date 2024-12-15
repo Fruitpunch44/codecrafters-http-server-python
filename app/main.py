@@ -14,11 +14,14 @@ def main():
         print(f'{client_sock} connected to port')
 
         request = client_sock.recv(4096).decode()
+        response=b'HTTP/1.1 200 OK\r\n\r\n'
+        if not request:
+            break
         print(f'{request}')
         if request[1].split() != "/":
-            client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
-        else:
-            client_sock.send(b'HTTP/1.1 200 OK\r\n\r\n')
+            response=client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
+        client_sock.send(response)
+
 
 
 if __name__ == "__main__":
