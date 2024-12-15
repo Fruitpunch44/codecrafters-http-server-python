@@ -14,7 +14,7 @@ def main():
         client_sock, client_addr = server_socket.accept()
         print(f'{client_sock} connected to port')
 
-        request = client_sock.recv(4096).decode().split(" ")
+        request = client_sock.recv(4096).decode()
         # debugging purposes
         print(f'{request}')
         response = b'HTTP/1.1 200 OK\r\n\r\n'
@@ -28,7 +28,10 @@ def main():
         elif request[1] == "/":
             client_sock.sendall(response)
         elif request[1] == '/echo/':
-            client_sock.sendall(response)
+            value=request.split("/echo/")[1]
+            print(value)
+            response=f'HTTP/1.1 200 OK\r\nContent-Type: {}\r\nContent-Length:f{len()}\r\n\r\nabc'
+            client_sock.send(response.encode())
 
         else:
             print("invalid format")
