@@ -14,7 +14,8 @@ def main():
         client_sock, client_addr = server_socket.accept()
         print(f'{client_sock} connected to port')
 
-        request = client_sock.recv(4096).decode()
+        request = client_sock.recv(4096).decode().split(" ")
+        print(f'f{request})
         response = b'HTTP/1.1 200 OK\r\n\r\n'
 
         # exit loop if no request is gotten
