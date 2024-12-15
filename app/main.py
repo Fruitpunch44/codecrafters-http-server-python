@@ -16,21 +16,22 @@ def main():
 
         request = client_sock.recv(4096).decode()
         # debugging purposes
-        print(f'{request}')
+        print(f'{request.split()}')
         response = b'HTTP/1.1 200 OK\r\n\r\n'
 
         # exit loop if no request is gotten
         if not request:
             break
 
-        if request[1]!= "/":
+        if request[1] != "/":
             client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
+
         elif request[1] == "/":
             client_sock.sendall(response)
         elif request[1] == '/echo/':
-            value=request.split("/echo/")[1]
+            value = request.split("/echo/")[1]
             print(value)
-            response=f'HTTP/1.1 200 OK\r\nContent-Type: {value}\r\nContent-Length:f{len(value)}\r\n\r\nabc'
+            response = f'HTTP/1.1 200 OK\r\nContent-Type: {value}\r\nContent-Length:f{len(value)}\r\n\r\nabc'
             client_sock.send(response.encode())
 
         else:
