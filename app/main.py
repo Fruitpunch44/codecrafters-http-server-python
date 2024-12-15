@@ -13,12 +13,9 @@ def main():
         client_sock, client_addr = server_socket.accept()
         print(f'{client_sock} connected to port')
 
-        response = b"HTTP/1.1 200 OK\r\n\r\n"
-        client_sock.send(response)
-
         request = client_sock.recv(4096).decode()
         print(f'{request}')
-        if request[1].split(" ")!= "/":
+        if request[1].split() != "/":
             client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
         else:
             client_sock.send(b'HTTP/1.1 200 OK\r\n\r\n')
