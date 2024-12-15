@@ -14,7 +14,7 @@ def main():
         client_sock, client_addr = server_socket.accept()
         print(f'{client_sock} connected to port')
 
-        request = client_sock.recv(4096).decode()
+        request = client_sock.recv(4096).decode().split(" ")
         # debugging purposes
         print(f'{request}')
         response = b'HTTP/1.1 200 OK\r\n\r\n'
@@ -23,11 +23,11 @@ def main():
         if not request:
             break
 
-        if request[1].split(' ') != "/":
+        if request[1]!= "/":
             client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
-        elif request[1].split(' ') == "/":
+        elif request[1] == "/":
             client_sock.sendall(response)
-        elif request[1].startswith('/echo'):
+        elif request[1] == '/echo/':
             client_sock.sendall(response)
 
         else:
