@@ -30,7 +30,7 @@ def main():
         elif request[1] == '/echo/':
             value=request.split("/echo/")[1]
             print(value)
-            response=f'HTTP/1.1 200 OK\r\nContent-Type: {}\r\nContent-Length:f{len()}\r\n\r\nabc'
+            response=f'HTTP/1.1 200 OK\r\nContent-Type: {value}\r\nContent-Length:f{len(value)}\r\n\r\nabc'
             client_sock.send(response.encode())
 
         else:
