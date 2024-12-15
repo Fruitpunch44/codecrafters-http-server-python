@@ -20,7 +20,7 @@ def main():
         print(f'{request}')
         if request[1].split() != "/":
             response=client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
-        client_sock.send(response)
+        client_sock.sendall(response)
 
 
 
