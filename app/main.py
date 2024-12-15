@@ -16,7 +16,8 @@ def main():
         response = b"HTTP/1.1 200 OK\r\n\r\n"
         client_sock.send(response)
 
-        request = client_sock.recv(1024).decode().split(" ")
+        request = client_sock.recv(4096).decode().split(" ")
+        print(f'{request}')
         if request[1] == "/":
             client_sock.send(b'HTTP/1.1 200 OK\r\n\r\n')
         else:
