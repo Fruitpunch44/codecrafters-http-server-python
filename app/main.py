@@ -16,12 +16,15 @@ def main():
 
         request = client_sock.recv(4096).decode()
         response = b'HTTP/1.1 200 OK\r\n\r\n'
+
+        # exit loop if no request is gotten
         if not request:
             break
         print(f'{request}')
         if request[1].split(" ") != "/":
-            response = client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
-        client_sock.sendall(response)
+            client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
+        else:
+            client_sock.sendall(response)
 
 
 if __name__ == "__main__":
