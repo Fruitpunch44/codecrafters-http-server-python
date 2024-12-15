@@ -27,7 +27,7 @@ def main():
             client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
         elif request[1].split(' ') == "/":
             client_sock.sendall(response)
-        elif request.startswith('/echo/'):
+        elif request[1].startswith('/echo'):
             client_sock.sendall(response)
 
         else:
