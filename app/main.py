@@ -22,10 +22,12 @@ def main():
         if not request:
             break
         print(f'{request}')
-        if request[1].split(" ") != "/":
+        if request[1]!= "/":
             client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
-        else:
+        elif request[1]=="/":
             client_sock.sendall(response)
+        else:
+            print("nothing")
 
 
 if __name__ == "__main__":
