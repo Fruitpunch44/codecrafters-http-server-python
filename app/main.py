@@ -63,9 +63,8 @@ def parse_request(request):
     elif request[0].startswith("POST"):
         directory = sys.argv[2]
         files = request[1][6:]
-        file_path = os.path.join(directory, files)
 
-        file_path = os.path.join(directory, file)
+        file_path = os.path.join(directory, files)
         with open(file_path, 'w') as file:
             new = files.lstrip('/').split('_')
             print(new)
