@@ -20,13 +20,14 @@ def handle_client(client_sock):
             if not request:
                 break
             # debugging purposes
-            print(f' {request}\n{request[1]} \n {request[1][6:]}')
+            print(f'{request}\n'
+                  f'{request[1]} \n '
+                 )
             response = parse_request(request)
             client_sock.send(response.encode())
         except Exception as e:
             print(f'{e}')
             client_sock.close()
-        show_clients()
 
 
 def parse_request(request):
