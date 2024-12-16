@@ -43,11 +43,11 @@ def parse_request(request):
         return res
 
     elif request[path].startswith('/files/'):
+        # it's reading from their servers not my local computer fyml
         try:
             directory = sys.argv[2]
             file = request[path][7:]
             file_path = os.path.join(directory, file)
-
             print(f'{file_path}')
             with open(file_path, 'r') as file:
                 content = file.read()
@@ -56,6 +56,15 @@ def parse_request(request):
         except Exception as e:
             return f"HTTP/1.1 404 Not Found\r\n\r\n"
 
+    elif request[0].startwith("POST"):
+        directory=sys.argv[2]
+        file=request[0][4:]
+        file_path=os.path.join(directory,file)
+        print(file_path)
+        with open(file_path,'w')as file:
+            content=file.write(str(file))
+            print(content)
+            return 'HTTP/1.1 201 Created\r\n\r\n'
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
 
