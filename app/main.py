@@ -4,13 +4,15 @@ import sys
 import os
 
 connected_client = []
+lock = threading.Lock()
 
 
 def handle_client(client_sock):
-    if client_sock not in connected_client:
-        connected_client.append(client_sock)
-    else:
-        print('client is already in connected list')
+    with lock:
+        if client_sock not in connected_client:
+            connected_client.append(client_sock)
+        else:
+            print('client is already in connected list')
 
     while True:
         try:
@@ -56,7 +58,7 @@ def parse_request(request):
         except Exception as e:
             return f"HTTP/1.1 404 Not Found\r\n\r\n"
 
-    elif request[0].startwith("POST"):
+    elif request[0].startswith("POST"):
         directory=sys.argv[2]
         file=request[0][4:]
         file_path=os.path.join(directory,file)
