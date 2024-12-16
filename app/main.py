@@ -59,12 +59,12 @@ def parse_request(request):
             return f"HTTP/1.1 404 Not Found\r\n\r\n"
 
     elif request[0].startswith("POST"):
-        directory=sys.argv[2]
-        file=request[0][4:]
-        file_path=os.path.join(directory,file)
+        directory = sys.argv[2]
+        files = request[0][4:]
+        file_path = os.path.join(directory, files)
         print(file_path)
-        with open(file_path,'w')as file:
-            content=file.write(str(file))
+        with open(file_path, 'w') as file:
+            content = file.write(files)
             print(content)
             return 'HTTP/1.1 201 Created\r\n\r\n'
     else:
