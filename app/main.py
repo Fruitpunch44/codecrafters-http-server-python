@@ -61,6 +61,7 @@ def parse_request(request):
     elif request[0].startswith("POST"):
         directory = sys.argv[2]
         files = request[0][4:]
+        print(f'fyml {files}')
         file_path = os.path.join(directory, files)
         print(file_path)
         with open(file_path, 'w') as file:
