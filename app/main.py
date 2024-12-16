@@ -27,7 +27,7 @@ def handle_client(client_sock):
 
 
 def parse_request(request):
-    #not optimal but a path is usally on index 1
+    # not optimal but a path is usally on index 1
     path = 1
     if request[path] == "/":
         return 'HTTP/1.1 200 OK\r\n\r\n'
@@ -43,14 +43,16 @@ def parse_request(request):
 
     elif request[path].startswith('/files'):
         try:
-            file_path=r'C:\Users\Olu-Ade\HTTP CODE CRAFTERS\codecrafters-http-server-python\app\files\hello.txt'
-            with open(file_path, 'r') as file:
+            directory = sys.argv[2]
+            filename = path[7:]
+            print(directory, filename)
+            with open(f"/{directory}/{filename}", 'r') as file:
                 content = file.read()
                 res = (f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\n"
                        f"Content-Length: {len(content)}\r\n\r\n{content}")
                 return res
-        except FileNotFoundError as e:
-            return e
+        except Exception as e:
+            return  f"HTTP/1.1 404 Not Found\r\n\r\n".encode()
 
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
