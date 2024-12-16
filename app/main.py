@@ -1,53 +1,53 @@
 import socket  # noqa: F401
+import threading
+
+clients_conntected = []
 
 
-def handle_client(sock):
-    pass
+def handle_client(client_sock):
+    if client_sock not in clients_conntected:
+        clients_conntected.append(client_sock)
+    else:
+        print('client is already connected ')
+    while True:
+        request = client_sock.recv(4096).decode().split()
+        # debugging purposes
+        print(f' {request}\n{request[1]} \n {request[1][6:]}')
+        res = b'HTTP/1.1 200 OK\r\n\r\n'
+        parse_request(request)
+        return res
 
 
-def parse_request():
-    pass
+def parse_request(request):
+    if request[1] == "/":
+        return
+    elif request[1].startswith('/echo/'):
+        value = request[1][6:]
+        print(value)
+        res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
+        return res
+    elif request[1].startswith('/user-agent'):
+        value = request[6]
+        res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
+        return res
+    else:
+       return b'HTTP/1.1 404 Not Found\r\n\r\n'
 
-
-def response():
-    pass
 
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
     print("Logs from your program will appear here!")
 
-    # Uncomment this to pass the first stage
-    #
     server_socket = socket.create_server(("localhost", 4221), reuse_port=False)
-    print("listening for incomming connection ")
+    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    print("listening for incoming connection ")
 
     while True:
         client_sock, client_addr = server_socket.accept()
+        my_thread = threading.Thread(target=handle_client, args=(client_sock,))
+        my_thread.start()
         print(f'{client_sock} connected to port')
-
-        request = client_sock.recv(4096).decode().split()
-        # debugging purposes
-        print(f' {request}\n{request[1]} \n {request[1][6:]}')
-        res = b'HTTP/1.1 200 OK\r\n\r\n'
-
-        # exit loop if no request is gotten
-        if not request:
-            break
-
-        if request[1] == "/":
-            client_sock.sendall(res)
-        elif request[1].startswith('/echo/'):
-            value = request[1][6:]
-            print(value)
-            res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
-            client_sock.send(res.encode())
-        elif request[1].startswith('/user-agent'):
-            value = request[6]
-            res=f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
-            client_sock.send(res.encode())
-        else:
-            client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
 
 
 if __name__ == "__main__":
