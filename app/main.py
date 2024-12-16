@@ -1,6 +1,7 @@
 import socket  # noqa: F401
 import threading
 import sys
+
 connected_client = []
 
 
@@ -22,7 +23,7 @@ def handle_client(client_sock):
 
 
 def parse_request(request):
-    path=1
+    path = 1
     if request[path] == "/":
         return 'HTTP/1.1 200 OK\r\n\r\n'
     elif request[path].startswith('/echo/'):
@@ -36,10 +37,11 @@ def parse_request(request):
         return res
 
     elif request[path].startswith('/files'):
-        with open('/files/hello.txt','r')as file:
-            content=file.read()
-            res=(f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\n"
-                 f"Content-Length: {len(content)}\r\n\r\n{content}").encode()
+        file_path=r'/files/hello.txt'
+        with open(file_path, 'r') as file:
+            content = file.read()
+            res = (f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\n"
+                   f"Content-Length: {len(content)}\r\n\r\n{content}").encode()
             return res
 
     else:
@@ -47,8 +49,8 @@ def parse_request(request):
 
 
 def show_clients():
-    for x,y in enumerate(connected_client):
-        print(f'{x+1}:{y}')
+    for x, y in enumerate(connected_client):
+        print(f'{x + 1}:{y}')
 
 
 def main():
