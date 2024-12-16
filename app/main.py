@@ -1,26 +1,21 @@
 import socket  # noqa: F401
 import threading
 
-clients_conntected = []
-
 
 def handle_client(client_sock):
-    if client_sock not in clients_conntected:
-        clients_conntected.append(client_sock)
-    else:
-        print('client is already connected ')
     while True:
         request = client_sock.recv(4096).decode().split()
+        if not request:
+            break
         # debugging purposes
         print(f' {request}\n{request[1]} \n {request[1][6:]}')
-        res = b'HTTP/1.1 200 OK\r\n\r\n'
-        parse_request(request)
-        return res
+        response = parse_request(request)
+        client_sock.send(response.encode())
 
 
 def parse_request(request):
     if request[1] == "/":
-        return
+        return 'HTTP/1.1 200 OK\r\n\r\n'
     elif request[1].startswith('/echo/'):
         value = request[1][6:]
         print(value)
@@ -31,8 +26,7 @@ def parse_request(request):
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
         return res
     else:
-       return b'HTTP/1.1 404 Not Found\r\n\r\n'
-
+        return 'HTTP/1.1 404 Not Found\r\n\r\n'
 
 
 def main():
