@@ -64,8 +64,7 @@ def parse_request(request):
         files = request[0][4:]
         file_path = os.path.join(directory, files)
         with open(file_path, 'w') as file:
-            content = file.write(files)
-            print(content)
+            file.write(files)
             return 'HTTP/1.1 201 Created\r\n\r\n'
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
