@@ -37,7 +37,7 @@ def parse_request(request):
         return res
 
     elif request[path].startswith('/files'):
-        file_path=r'/files/hello.txt'
+        file_path=r'C:\Users\Olu-Ade\HTTP CODE CRAFTERS\codecrafters-http-server-python\app\files\hello.txt'
         with open(file_path, 'r') as file:
             content = file.read()
             res = (f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\n"
