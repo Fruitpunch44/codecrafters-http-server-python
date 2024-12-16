@@ -35,10 +35,7 @@ def main():
         if not request:
             break
 
-        if request[1] != "/":
-            client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
-
-        elif request[1] == "/":
+        if request[1] == "/":
             client_sock.sendall(res)
         elif request[1].startswith('/echo/'):
             value = request[1][6:]
@@ -49,10 +46,8 @@ def main():
             value = request[1][6:]
             res=f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
             client_sock.send(res.encode())
-
-
         else:
-            print("invalid format")
+            client_sock.send(b'HTTP/1.1 404 Not Found\r\n\r\n')
 
 
 if __name__ == "__main__":
