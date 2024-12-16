@@ -73,7 +73,7 @@ def parse_request(request):
             print(content)
             return 'HTTP/1.1 201 Created\r\n\r\n'
     else:
-        return 'HTTP/1.1 404 Not Found\r\n\r\n'
+        print('kill me')
 
 
 def show_clients():
