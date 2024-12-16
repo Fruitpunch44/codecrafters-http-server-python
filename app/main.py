@@ -40,7 +40,7 @@ def main():
         elif request[1].startswith('/echo/'):
             value = request[1][6:].strip()
             print(len(value))
-            res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:f{len(value)}\r\n\r\n{value}'
+            res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
             client_sock.send(res.encode())
 
         else:
