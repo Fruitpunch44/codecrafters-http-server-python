@@ -28,7 +28,7 @@ def main():
 
         request = client_sock.recv(4096).decode().split()
         # debugging purposes
-        print(f'{request[1]} \n {request[1][6:]}')
+        print(f' {request}\n{request[1]} \n {request[1][6:]}')
         res = b'HTTP/1.1 200 OK\r\n\r\n'
 
         # exit loop if no request is gotten
