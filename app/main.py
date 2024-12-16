@@ -36,8 +36,7 @@ def parse_request(request):
         return res
 
     elif request[path].startswith('/files'):
-        file=sys.argv[2]
-        with open(file,'r')as file:
+        with open('/files/hello.txt','r')as file:
             content=file.read()
             res=(f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\n"
                  f"Content-Length: {len(content)}\r\n\r\n{content}").encode()
