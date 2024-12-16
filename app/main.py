@@ -63,8 +63,6 @@ def parse_request(request):
         directory = sys.argv[2]
         files = request[0][4:]
         file_path = os.path.join(directory, files)
-        print(file_path)
-        print(f'fyml {files}')
         with open(file_path, 'w') as file:
             content = file.write(files)
             print(content)
