@@ -41,12 +41,12 @@ def parse_request(request):
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
         return res
 
-    elif request[path].startswith('/files'):
+    elif request[path].startswith('/files/'):
         try:
             directory = sys.argv[2]
-            filename = path[7:]
+            filename = sys.argv[3]
             print(directory, filename)
-            with open(f"/{directory}/{filename}", 'r') as file:
+            with open(f"/{directory}/{filename}", 'rb') as file:
                 content = file.read()
                 res = (f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\n"
                        f"Content-Length: {len(content)}\r\n\r\n{content}")
