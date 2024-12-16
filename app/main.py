@@ -1,6 +1,7 @@
 import socket  # noqa: F401
 import threading
 import sys
+import os
 
 connected_client = []
 
@@ -44,11 +45,13 @@ def parse_request(request):
     elif request[path].startswith('/files/'):
         try:
             directory = sys.argv[2]
-            filename = 'foo.txt'
-            print(f'lmao{directory}{filename}')
-            with open(f"/{directory}/{filename}", 'r') as file:
+            file = request[path][7:]
+            file_path = os.path.join(directory, file)
+
+            print(f'{file_path}')
+            with open(file_path, 'r') as file:
                 content = file.read()
-                res =f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(content)}\r\n\r\n{content}"
+                res = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(content)}\r\n\r\n{content}"
                 return res
         except Exception as e:
             return f"HTTP/1.1 404 Not Found\r\n\r\n"
