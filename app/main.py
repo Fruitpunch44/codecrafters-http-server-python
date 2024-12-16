@@ -65,6 +65,7 @@ def parse_request(request):
         files = request[1][6:]
         file_path = os.path.join(directory, files)
 
+        os.makedirs(os.path.dirname(file_path),exist_ok=True)
         with open(file_path, 'w') as file:
             new = files.lstrip('/').split('_')
             print(new)
