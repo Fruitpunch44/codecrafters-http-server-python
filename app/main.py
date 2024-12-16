@@ -44,7 +44,7 @@ def parse_request(request):
     elif request[path].startswith('/files/'):
         try:
             directory = sys.argv[2]
-            filename = sys.argv[7:]
+            filename = 'foo.txt'
             print(directory, filename)
             with open(f"/{directory}/{filename}", 'r') as file:
                 content = file.read()
@@ -52,7 +52,7 @@ def parse_request(request):
                        f"Content-Length: {len(content)}\r\n\r\n{content}")
                 return res
         except Exception as e:
-            return  f"HTTP/1.1 404 Not Found\r\n\r\n"
+            return f"HTTP/1.1 404 Not Found\r\n\r\n"
 
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
