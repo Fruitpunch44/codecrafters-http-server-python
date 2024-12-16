@@ -1,6 +1,6 @@
 import socket  # noqa: F401
 import threading
-
+import sys
 connected_client = []
 
 
@@ -22,17 +22,27 @@ def handle_client(client_sock):
 
 
 def parse_request(request):
-    if request[1] == "/":
+    path=1
+    if request[path] == "/":
         return 'HTTP/1.1 200 OK\r\n\r\n'
-    elif request[1].startswith('/echo/'):
+    elif request[path].startswith('/echo/'):
         value = request[1][6:]
         print(value)
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
         return res
-    elif request[1].startswith('/user-agent'):
+    elif request[path].startswith('/user-agent'):
         value = request[6]
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
         return res
+
+    elif request[path].startswith('/files'):
+        file=sys.argv[2]
+        with open(file,'r')as file:
+            content=file.read()
+            res=(f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\n"
+                 f"Content-Length: {len(content)}\r\n\r\n{content}").encode()
+            return res
+
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
 
