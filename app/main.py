@@ -23,9 +23,6 @@ def handle_client(client_sock):
             print(f'{request}\n'
                   f'{request[1]} \n '
                   f'{request[1][6:]}\n')
-            files=request[1][6:]
-            new = files.lstrip('/').split('_')
-            print(new)
             response = parse_request(request)
             client_sock.send(response.encode())
         except Exception as e:
@@ -54,6 +51,7 @@ def parse_request(request):
             directory = sys.argv[2]
             file = request[path][7:]
             file_path = os.path.join(directory, file)
+
             print(f'{file_path}')
             with open(file_path, 'r') as file:
                 content = file.read()
@@ -70,7 +68,7 @@ def parse_request(request):
         with open(file_path, 'w') as file:
             new = files.lstrip('/').split('_')
             print(new)
-            content = file.write(new)
+            content = file.write(str(new))
             print(content)
             return 'HTTP/1.1 201 Created\r\n\r\n'
     else:
