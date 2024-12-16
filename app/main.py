@@ -44,7 +44,7 @@ def parse_request(request):
     elif request[path].startswith('/files/'):
         try:
             directory = sys.argv[2]
-            filename = sys.argv[3]
+            filename = sys.argv[7:]
             print(directory, filename)
             with open(f"/{directory}/{filename}", 'r') as file:
                 content = file.read()
