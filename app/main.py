@@ -51,7 +51,7 @@ def parse_request(request):
                 res = (f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\n"
                        f"Content-Length: {len(content)}\r\n\r\n{content}")
                 return res
-        except FileNotFoundError:
+        except Exception as e:
             return  f"HTTP/1.1 404 Not Found\r\n\r\n"
 
     else:
