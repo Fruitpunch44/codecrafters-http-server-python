@@ -22,7 +22,7 @@ def handle_client(client_sock):
             # debugging purposes
             print(f'{request}\n'
                   f'{request[1]} \n '
-                  f'{request[1][6:]}')
+                  f'{request[1][6:]}\n')
             response = parse_request(request)
             client_sock.send(response.encode())
         except Exception as e:
@@ -62,9 +62,9 @@ def parse_request(request):
     elif request[0].startswith("POST"):
         directory = sys.argv[2]
         files = request[0][4:]
-        print(f'fyml {files}')
         file_path = os.path.join(directory, files)
         print(file_path)
+        print(f'fyml {files}')
         with open(file_path, 'w') as file:
             content = file.write(files)
             print(content)
@@ -90,7 +90,7 @@ def main():
         client_sock, client_addr = server_socket.accept()
         my_thread = threading.Thread(target=handle_client, args=(client_sock,))
         my_thread.start()
-        print(f'{client_sock} connected to port')
+
 
 
 if __name__ == "__main__":
