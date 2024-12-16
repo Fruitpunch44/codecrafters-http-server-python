@@ -46,13 +46,13 @@ def parse_request(request):
             directory = sys.argv[2]
             filename = sys.argv[3]
             print(directory, filename)
-            with open(f"/{directory}/{filename}", 'rb') as file:
+            with open(f"/{directory}/{filename}", 'r') as file:
                 content = file.read()
                 res = (f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\n"
                        f"Content-Length: {len(content)}\r\n\r\n{content}")
                 return res
         except Exception as e:
-            return  f"HTTP/1.1 404 Not Found\r\n\r\n".encode()
+            return  f"HTTP/1.1 404 Not Found\r\n\r\n"
 
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
