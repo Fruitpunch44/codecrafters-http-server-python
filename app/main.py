@@ -45,7 +45,7 @@ def parse_request(request):
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
         return res
 
-    elif request[path].startswith('/files/'):
+    elif request[path].startswith('/files/') and request[0]=='GET':
         # it's reading from their servers not my local computer fyml
         try:
             directory = sys.argv[2]
@@ -73,7 +73,7 @@ def parse_request(request):
             print(content)
             return 'HTTP/1.1 201 Created\r\n\r\n'
     else:
-        print('kill me')
+        return 'HTTP/1.1 404 Not Found\r\n\r\n'
 
 
 def show_clients():
