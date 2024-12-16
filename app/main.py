@@ -45,7 +45,7 @@ def parse_request(request):
         try:
             directory = sys.argv[2]
             filename = 'foo.txt'
-            print(directory, filename)
+            print(f'{directory}/{filename}')
             with open(f"/{directory}/{filename}", 'r') as file:
                 content = file.read()
                 res = (f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\n"
