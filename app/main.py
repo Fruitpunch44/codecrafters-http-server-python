@@ -12,17 +12,22 @@ def handle_client(client_sock):
         print('client is already in connected list')
 
     while True:
-        request = client_sock.recv(4096).decode().split()
-        if not request:
-            break
-        # debugging purposes
-        print(f' {request}\n{request[1]} \n {request[1][6:]}')
-        response = parse_request(request)
-        client_sock.send(response.encode())
-    show_clients()
+        try:
+            request = client_sock.recv(4096).decode().split()
+            if not request:
+                break
+            # debugging purposes
+            print(f' {request}\n{request[1]} \n {request[1][6:]}')
+            response = parse_request(request)
+            client_sock.send(response.encode())
+        except Exception as e:
+            print(f'{e}')
+            client_sock.close()
+        show_clients()
 
 
 def parse_request(request):
+    #not optimal but a path is usally on index 1
     path = 1
     if request[path] == "/":
         return 'HTTP/1.1 200 OK\r\n\r\n'
@@ -37,12 +42,15 @@ def parse_request(request):
         return res
 
     elif request[path].startswith('/files'):
-        file_path=r'C:\Users\Olu-Ade\HTTP CODE CRAFTERS\codecrafters-http-server-python\app\files\hello.txt'
-        with open(file_path, 'r') as file:
-            content = file.read()
-            res = (f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\n"
-                   f"Content-Length: {len(content)}\r\n\r\n{content}").encode()
-            return res
+        try:
+            file_path=r'C:\Users\Olu-Ade\HTTP CODE CRAFTERS\codecrafters-http-server-python\app\files\hello.txt'
+            with open(file_path, 'r') as file:
+                content = file.read()
+                res = (f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\n"
+                       f"Content-Length: {len(content)}\r\n\r\n{content}")
+                return res
+        except FileNotFoundError as e:
+            return e
 
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
