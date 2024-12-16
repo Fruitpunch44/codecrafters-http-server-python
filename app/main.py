@@ -1,8 +1,15 @@
 import socket  # noqa: F401
 import threading
 
+connected_client = []
+
 
 def handle_client(client_sock):
+    if client_sock not in connected_client:
+        connected_client.append(client_sock)
+    else:
+        print('client is already in connected list')
+
     while True:
         request = client_sock.recv(4096).decode().split()
         if not request:
@@ -11,6 +18,7 @@ def handle_client(client_sock):
         print(f' {request}\n{request[1]} \n {request[1][6:]}')
         response = parse_request(request)
         client_sock.send(response.encode())
+    show_clients()
 
 
 def parse_request(request):
@@ -27,6 +35,11 @@ def parse_request(request):
         return res
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
+
+
+def show_clients():
+    for x,y in enumerate(connected_client):
+        print(f'{x+1}:{y}')
 
 
 def main():
