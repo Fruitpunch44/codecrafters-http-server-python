@@ -61,10 +61,14 @@ def parse_request(request):
 
     elif request[0].startswith("POST"):
         directory = sys.argv[2]
-        files = request[0][4:]
+        files = request[1][6:]
         file_path = os.path.join(directory, files)
+
         with open(file_path, 'w') as file:
-            file.write(files)
+            new = files.lstrip('/').split('_')
+            print(new)
+            content = file.write(new)
+            print(content)
             return 'HTTP/1.1 201 Created\r\n\r\n'
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
@@ -87,7 +91,6 @@ def main():
         client_sock, client_addr = server_socket.accept()
         my_thread = threading.Thread(target=handle_client, args=(client_sock,))
         my_thread.start()
-
 
 
 if __name__ == "__main__":
