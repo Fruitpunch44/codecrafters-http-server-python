@@ -29,8 +29,8 @@ def handle_client(client_sock):
 
 
 def parse_headers(request):
-    fields = request[1:]
-    fields.lstrip("\r\n")
+    fields=request.split("\r\n")
+    fields = fields[1:]
     headers = {}
     for field in fields:
         key, value = field.split(":", 1)
