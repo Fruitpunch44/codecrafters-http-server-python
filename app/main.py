@@ -73,9 +73,9 @@ def parse_request(request):
     elif request[0].startswith("POST"):
         directory = sys.argv[2]
         print(directory)
-        path = request[1]
+        path = request[1].strip("/")
         files = " ".join(request[9:])  # read the data being sent by the post request
-        file_path = os.path.join(directory, path)
+        file_path = f'{directory}{path}'
         print(file_path)
 
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
