@@ -75,17 +75,17 @@ def parse_request(request):
         print(directory)
         path = request[1].strip("/")
         files = " ".join(request[9:])  # read the data being sent by the post request
-        file_path = os.path.join(directory,path)
+        file_path = os.path.join(directory, path)
         print(file_path)
         os.mkdir(os.path.dirname(file_path))
-        with open(f"{file_path}.txt",'w') as file:
+        with open(f"{file_path}.txt", 'w') as file:
             new = files.lstrip('/').split('_')
             print(new)
             string = " ".join(new)
             print(string)
             print(len(string))
             file.write(string)
-            return 'HTTP/1.1 201 Created\r\n\r\n'
+        return 'HTTP/1.1 201 Created\r\n\r\n'
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
 
