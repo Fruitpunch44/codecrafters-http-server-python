@@ -15,20 +15,17 @@ def handle_client(client_sock):
             print('client is already in connected list')
 
     while True:
-        try:
-            request = client_sock.recv(4096).decode().split()
-            if not request:
-                break
-            # debugging purposes
-            print(f'{request}\n'
-                  f'{request[1]} \n '
-                  f'{request[1][6:]}\n')
-            response = parse_request(request)
-            parse_headers(request)
-            client_sock.send(response.encode())
-        except Exception as e:
-            print(f'{e}')
-            client_sock.close()
+
+        request = client_sock.recv(4096).decode().split()
+        if not request:
+            break
+        # debugging purposes
+        print(f'{request}\n'
+              f'{request[1]} \n '
+              f'{request[1][6:]}\n')
+        response = parse_request(request)
+        parse_headers(request)
+        client_sock.send(response.encode())
 
 
 def parse_headers(request):
