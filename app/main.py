@@ -24,13 +24,13 @@ def handle_client(client_sock):
               f'{request[1]} \n '
               f'{request[1][6:]}\n')
         response = parse_request(request)
-        parse_headers(request)
         client_sock.send(response.encode())
+        parse_headers(request)
 
 
 def parse_headers(request):
     fields = "".join(request)
-    fields=fields.split('\r\n')
+    fields = fields.split('\r\n')
     fields = fields[1:]
     headers = {}
     for field in fields:
@@ -72,8 +72,8 @@ def parse_request(request):
 
     elif request[0].startswith("POST"):
         directory = sys.argv[2]
-        path=request[1][6:]
-        files = " ".join(request[9:])#read the data being sent by the post
+        path = request[1][6:]
+        files = " ".join(request[9:])  # read the data being sent by the post request
         file_path = os.path.join(directory, path)
         print(file_path)
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
