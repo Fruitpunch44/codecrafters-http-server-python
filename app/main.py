@@ -77,7 +77,7 @@ def parse_request(request):
         files = " ".join(request[9:])  # read the data being sent by the post request
         file_path = f'{directory}{path}'
         print(file_path)
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
         with open(f'{directory}{path}', 'w') as file:
             new = files.lstrip('/').split('_')
             print(new)
