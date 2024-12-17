@@ -24,10 +24,23 @@ def handle_client(client_sock):
                   f'{request[1]} \n '
                   f'{request[1][6:]}\n')
             response = parse_request(request)
+            parse_headers(request)
             client_sock.send(response.encode())
         except Exception as e:
             print(f'{e}')
             client_sock.close()
+
+
+def parse_headers(request):
+    fields = request[1:]
+    fields.lstrip("\r\n")
+    headers = {}
+    for field in fields:
+        key, value = field.split(":", 1)
+        headers[key] = value
+    for key,value in headers.items():
+        print(f'{key}:{value}')
+
 
 
 def parse_request(request):
@@ -63,8 +76,8 @@ def parse_request(request):
     elif request[0].startswith("POST"):
         directory = sys.argv[2]
         files = request[1][6:]
-
         file_path = os.path.join(directory, files)
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, 'w') as file:
             new = files.lstrip('/').split('_')
             print(new)
