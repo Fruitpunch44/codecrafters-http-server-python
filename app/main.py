@@ -78,6 +78,7 @@ def parse_request(request):
         file_path = os.path.join(directory, path)
         print(file_path)
         os.mkdir(os.path.dirname(file_path))
+        print(f"Ensured directory exists for: {os.path.dirname(file_path)}")
         with open(f"{file_path}.txt", 'w') as file:
             new = files.lstrip('/').split('_')
             print(new)
