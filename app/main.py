@@ -33,8 +33,9 @@ def parse_headers(request):
     fields = fields[1:]
     headers = {}
     for field in fields:
-        key, value = field.split(":", 1)
-        headers[key] = value
+        if ':' in field:
+            key, value = field.split(":", 1)
+            headers[key] = value
     print(headers)
 
 
