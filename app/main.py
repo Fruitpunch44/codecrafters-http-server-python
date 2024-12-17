@@ -32,7 +32,7 @@ def parse_headers(request):
     fields=request.split("\r\n")
     fields = fields[1:]
     headers = {}
-    for field in fields:
+    for field,value in fields:
         key, value = field.split(":", 1)
         headers[key] = value
     for key,value in headers.items():
