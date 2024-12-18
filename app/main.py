@@ -18,7 +18,7 @@ def handle_client(client_sock):
 
     while True:
 
-        request = client_sock.recv(4096).decode().split()
+        request = client_sock.recv(4096).decode()
         if not request:
             break
         # debugging purposes
@@ -31,7 +31,7 @@ def handle_client(client_sock):
 
 
 def parse_headers(request):
-    fields = "".join(request)
+    fields = request
     fields = fields.split('\r\n')
     fields = fields[1:]
     headers = {}
