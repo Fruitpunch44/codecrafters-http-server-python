@@ -25,7 +25,7 @@ def handle_client(client_sock):
         print(f'{request}\n'
               f'{request[1]} \n '
               f'{request[1][6:]}\n')
-        parse_headers(request)
+        print(parse_headers(request))
 
 
 def parse_headers(request):
