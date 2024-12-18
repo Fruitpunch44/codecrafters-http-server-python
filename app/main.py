@@ -25,11 +25,9 @@ def handle_client(client_sock):
         print(f'{request}\n'
               f'{request[1]} \n '
               f'{request[1][6:]}\n')
-        parse_headers(request)
-        gzip=accept_gzip(parse_headers)
         response = parse_request(request)
         client_sock.send(response.encode())
-        client_sock.send(gzip.encode())
+        parse_headers(request)
 
 
 def parse_headers(request):
@@ -41,7 +39,7 @@ def parse_headers(request):
         if ':' in field:
             key, value = field.split(":", 1)
             headers[key] = value
-    for key, value in headers.items():
+    for key,value in headers.items():
         print(f'{key}:{value}')
     return headers
 
@@ -81,14 +79,14 @@ def parse_request(request):
         directory = File_dir
         print(directory)  # debugging
         path = request[1][6:].strip('/')
-        print(path)  # debugging
+        print(path)# debugging
         files = " ".join(request[9:])  # read the data being sent by the post request
         file_path = f'{directory}{path}'
         print(file_path)  # debugging
         try:
             with open(file_path, 'w') as file:
                 new = files.lstrip('/').split('_')
-                print(new)  # debugging
+                print(new) # debugging
                 string = " ".join(new)
                 print(string)
                 print(len(string))
@@ -104,15 +102,10 @@ def show_clients():
     for x, y in enumerate(connected_client):
         print(f'{x + 1}:{y}')
 
+def accept_gzip():
+    pass
 
-def accept_gzip(request):
-    head = parse_headers(request)
-    for key, value in head.items():
-        print(f'{key}:{value}')
-    if head['Accept-Encoding'] == 'gzip':
-        return 'HTTP/1.1 200 OK\r\n\r\n'
-    else:
-        return 'sorry'
+
 
 
 def main():
