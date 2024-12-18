@@ -22,8 +22,7 @@ def handle_client(client_sock):
         if not request:
             break
         # debugging purposes
-        print(f'{request}'
-              f'{request[2:]}')
+        print(f'{request}')
         print(request.split())
         response=parse_request(request)
         client_sock.send(response.encode())
@@ -108,8 +107,9 @@ def show_clients():
 
 def accept_gzip(request):
     headers = parse_headers(request)
-    if headers['Accept-Encoding'] == ' gzip':
-        return 'HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\n\r\n'
+    if 'Accept-Encoding' in headers and "gzip" in headers['Accept-Encoding']
+        return ('HTTP/1.1 200 OK\r\n'
+                'Content-Encoding: gzip\r\n\r\n')
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
