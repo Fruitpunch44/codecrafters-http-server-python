@@ -96,7 +96,8 @@ def parse_request(request):
             print(f'{e}')
 
     elif request[0].startswith('GET'):
-        return accept_gzip(request)
+        gzip=accept_gzip(request)
+        return gzip
 
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
