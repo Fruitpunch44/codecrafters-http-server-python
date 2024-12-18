@@ -25,8 +25,6 @@ def handle_client(client_sock):
         print(f'{request}\n'
               f'{request[1]} \n '
               f'{request[1][6:]}\n')
-        response = parse_request(request)
-        client_sock.send(response.encode())
         client_sock.send(accept_gzip(request))
 
 
