@@ -25,7 +25,8 @@ def handle_client(client_sock):
         print(f'{request}\n'
               f'{request[1]} \n '
               f'{request[1][6:]}\n')
-        client_sock.send(accept_gzip(request).encode())
+        response=parse_request(request)
+        client_sock.send(response.encode())
 
 
 def parse_headers(request):
@@ -94,6 +95,9 @@ def parse_request(request):
             return 'HTTP/1.1 201 Created\r\n\r\n'
         except Exception as e:
             print(f'{e}')
+
+    elif request[0].startswith('GET'):
+        accept_gzip(request)
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
 
