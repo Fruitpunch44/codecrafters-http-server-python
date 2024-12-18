@@ -95,8 +95,7 @@ def parse_request(request):
     elif request[0].startswith('GET'):
         gzip = accept_gzip(request)
         return gzip
-    else:
-        return 'fyml'
+
 
 
 def show_clients():
