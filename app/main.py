@@ -39,7 +39,8 @@ def parse_headers(request):
         if ':' in field:
             key, value = field.split(":", 1)
             headers[key] = value
-    print(headers)
+    for key,value in headers.items():
+        print(f'{key}:{value}')
 
 
 def parse_request(request):
@@ -77,14 +78,14 @@ def parse_request(request):
         directory = File_dir
         print(directory)  # debugging
         path = request[1][6:].strip('/')
-        print(path)
+        print(path)# debugging
         files = " ".join(request[9:])  # read the data being sent by the post request
         file_path = f'{directory}{path}'
         print(file_path)  # debugging
         try:
             with open(file_path, 'w') as file:
                 new = files.lstrip('/').split('_')
-                print(new)
+                print(new) # debugging
                 string = " ".join(new)
                 print(string)
                 print(len(string))
