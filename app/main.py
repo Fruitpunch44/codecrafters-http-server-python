@@ -47,19 +47,19 @@ def parse_request(request):
     if request[path] == "/" and request[0] == 'GET':
         return 'HTTP/1.1 200 OK\r\n\r\n'
 
-    elif request[path].startswith('/echo/') and request[0].split() == 'GET':
+    elif request[path].startswith('/echo/') and request.split[0] == 'GET':
         value = request[1][6:]
         gzip = accept_gzip(request)
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
         return gzip
 
 
-    elif request[path].startswith('/user-agent') and request[0] == 'GET':
+    elif request[path].startswith('/user-agent') and request.split[0] == 'GET':
         value = request[6]
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
         return res
 
-    elif request[path].startswith('/files/') and request[0] == 'GET':
+    elif request[path].startswith('/files/') and request.split[0]== 'GET':
         # it's reading from their servers not my local computer fyml
         try:
             directory = sys.argv[2]
@@ -90,10 +90,8 @@ def parse_request(request):
             return 'HTTP/1.1 201 Created\r\n\r\n'
         except Exception as e:
             print(f'{e}')
-
-    elif request[0].startswith('GET'):
-        gzip = accept_gzip(request)
-        return gzip
+    else:
+        return f"HTTP/1.1 404 Not Found\r\n\r\n"
 
 
 def show_clients():
