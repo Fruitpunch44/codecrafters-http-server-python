@@ -31,7 +31,7 @@ def handle_client(client_sock):
 def parse_headers(request):
     fields = request
     fields = fields.split('\r\n')
-    fields = fields[1:]
+    fields = fields[2:]
     headers = {}
     for field in fields:
         if ':' in field:
