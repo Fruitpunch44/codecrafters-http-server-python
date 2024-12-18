@@ -25,10 +25,10 @@ def handle_client(client_sock):
         print(f'{request}\n'
               f'{request[1]} \n '
               f'{request[1][6:]}\n')
+        accept_gzip(request)
         response = parse_request(request)
         client_sock.send(response.encode())
         parse_headers(request)
-        accept_gzip(request)
 
 
 def parse_headers(request):
@@ -108,6 +108,8 @@ def accept_gzip(request):
     head = parse_headers(request)
     for key, value in head.items():
         print(f'{key}:{value}')
+    if head['Accept-Encoding'] == 'gzip':
+        return 'HTTP/1.1 200 OK\r\n\r\n'
 
 
 def main():
