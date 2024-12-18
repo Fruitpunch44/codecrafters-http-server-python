@@ -26,7 +26,7 @@ def handle_client(client_sock):
         print(request.split())
         response = parse_request(request)
         client_sock.send(response.encode())
-        print(f'response {client_sock.send(b'response')}')
+        print(f'response {client_sock.send(response.encode())}')
 
 
 def parse_headers(request):
@@ -94,7 +94,11 @@ def parse_request(request):
 
     elif request[0].startswith('GET'):
         gzip = accept_gzip(request)
-        return gzip
+        if gzip:
+            return gzip
+        else:
+            # Return a default response if no gzip encoding is accepted
+            return 'HTTP/1.1 200 OK\r\n\r\n'
 
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'

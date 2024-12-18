@@ -1,3 +1,3 @@
-mylist=["ade","ssuccc","duubeubeubf","uhrfu4uhr4ugfr"]
-print(mylist[2:])
-print(mylist[1:])
+res = ('HTTP/1.1 200 OK\r\n'
+       'Content-Encoding: gzip\r\n\r\n')
+print(len(res))
