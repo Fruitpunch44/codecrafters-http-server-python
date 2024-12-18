@@ -94,12 +94,7 @@ def parse_request(request):
 
     elif request[0].startswith('GET'):
         gzip = accept_gzip(request)
-        if gzip:
-            return gzip
-        else:
-            # Return a default response if no gzip encoding is accepted
-            return 'HTTP/1.1 200 OK\r\n\r\n'
-
+        return gzip
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
 
