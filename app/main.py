@@ -27,7 +27,7 @@ def handle_client(client_sock):
               f'{request[1][6:]}\n')
         response = parse_request(request)
         client_sock.send(response.encode())
-        print(parse_headers(request))
+        client_sock.send(accept_gzip(request))
 
 
 def parse_headers(request):
@@ -39,7 +39,7 @@ def parse_headers(request):
         if ':' in field:
             key, value = field.split(":", 1)
             headers[key] = value
-    for key,value in headers.items():
+    for key, value in headers.items():
         print(f'{key}:{value}')
     return headers
 
@@ -47,6 +47,8 @@ def parse_headers(request):
 def parse_request(request):
     # not optimal but a path is usally on index 1
     global File_dir
+    request.split()
+    print(request)
     path = 1
     if request[path] == "/" and request[0] == 'GET':
         return 'HTTP/1.1 200 OK\r\n\r\n'
@@ -79,14 +81,14 @@ def parse_request(request):
         directory = File_dir
         print(directory)  # debugging
         path = request[1][6:].strip('/')
-        print(path)# debugging
+        print(path)  # debugging
         files = " ".join(request[9:])  # read the data being sent by the post request
         file_path = f'{directory}{path}'
         print(file_path)  # debugging
         try:
             with open(file_path, 'w') as file:
                 new = files.lstrip('/').split('_')
-                print(new) # debugging
+                print(new)  # debugging
                 string = " ".join(new)
                 print(string)
                 print(len(string))
@@ -102,11 +104,13 @@ def show_clients():
     for x, y in enumerate(connected_client):
         print(f'{x + 1}:{y}')
 
-def accept_gzip():
-    pass
 
-
-
+def accept_gzip(request):
+    headers = parse_headers(request)
+    if headers['Accept-Encoding'] == 'gzip':
+        return 'HTTP/1.1 200 OK\r\n\r\n'
+    else:
+        return 'No GZIP'
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
