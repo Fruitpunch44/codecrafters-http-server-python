@@ -48,10 +48,11 @@ def parse_request(request):
     print(request.split()[0][:3])
 
     path = 1
+    filename=request[1][6:]
     if request[path] == "/" and request[0] == 'GET':
         return 'HTTP/1.1 200 OK\r\n\r\n'
 
-    elif request.split()[path] == '/echo/' and request.split()[0] == 'GET':
+    elif request.split()[path].startswith(f'/echo/{filename}') and request.split()[0] == 'GET':
         value = request[1][6:]
         gzip = accept_gzip(request)
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
