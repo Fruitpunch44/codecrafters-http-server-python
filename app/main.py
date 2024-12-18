@@ -44,15 +44,17 @@ def parse_headers(request):
 def parse_request(request):
     # not optimal but a path is usally on index 1
     global File_dir
-    request.split()
+    print(request)
     path = 1
     if request[path] == "/" and request[0] == 'GET':
         return 'HTTP/1.1 200 OK\r\n\r\n'
-    elif request[path].startswith('/echo/'):
+
+    elif request[path].startswith('/echo/') and request[0] == 'GET':
         value = request[1][6:]
         print(value)
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
         return res
+
     elif request[path].startswith('/user-agent') and request[0] == 'GET':
         value = request[6]
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
@@ -95,6 +97,7 @@ def parse_request(request):
 
     elif request[0].startswith('GET'):
         accept_gzip(request)
+
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
 
