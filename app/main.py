@@ -30,7 +30,6 @@ def handle_client(client_sock):
 
 def parse_headers(request):
     fields = request
-    fields = fields.split('\r\n')
     fields = fields[2:]
     headers = {}
     for field in fields:
@@ -43,13 +42,12 @@ def parse_headers(request):
 def parse_request(request):
     # not optimal but a path is usally on index 1
     global File_dir
-    request = request.split()
     print(request)
     path = 1
     if request[path] == "/" and request[0] == 'GET':
         return 'HTTP/1.1 200 OK\r\n\r\n'
 
-    elif request[path].startswith('/echo/') and request[0] == 'GET':
+    elif request[path].split().startswith('/echo/') and request[0].split() == 'GET':
         value = request[1][6:]
         gzip = accept_gzip(request)
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
