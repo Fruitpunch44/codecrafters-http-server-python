@@ -25,19 +25,6 @@ def handle_client(client_sock):
         print(f'{request}\n'
               f'{request[1]} \n '
               f'{request[1][6:]}\n')
-        fields = "".join(request)
-        fields = fields.split('\r\n')
-        fields = fields[1:]
-        headers = {}
-        for field in fields:
-            if ':' in field:
-                key, value = field.split(":", 1)
-                headers[key] = value
-        for key, value in headers.items():
-            print(f'{key}:{value}')
-        accept_gzip(request)
-        response = parse_request(request)
-        client_sock.send(response.encode())
         parse_headers(request)
 
 
