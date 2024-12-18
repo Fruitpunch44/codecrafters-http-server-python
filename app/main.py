@@ -22,8 +22,7 @@ def handle_client(client_sock):
         if not request:
             break
         # debugging purposes
-        print(f'{request.split[0]}')
-        print(request.split())
+        print(f'{request}')
         response = parse_request(request)
         client_sock.send(response.encode())
         print(f'response {client_sock.send(response.encode())}')
@@ -44,6 +43,7 @@ def parse_headers(request):
 def parse_request(request):
     # not optimal but a path is usally on index 1
     global File_dir
+    request = request.split()
     print(request)
     path = 1
     if request[path] == "/" and request[0] == 'GET':
@@ -95,7 +95,6 @@ def parse_request(request):
     elif request[0].startswith('GET'):
         gzip = accept_gzip(request)
         return gzip
-
 
 
 def show_clients():
