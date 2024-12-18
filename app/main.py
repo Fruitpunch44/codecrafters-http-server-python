@@ -38,7 +38,7 @@ def parse_headers(request):
             key, value = field.split(":", 1)
             headers[key] = value
     for key, value in headers.items():
-        print(f'{key}:{value}')
+        print(f'{key}{value}')
     return headers
 
 
