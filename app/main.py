@@ -22,7 +22,8 @@ def handle_client(client_sock):
         if not request:
             break
         # debugging purposes
-        print(f'{request}')
+        print(f'{request}'
+              f'{request[2:]}')
         print(request.split())
         response=parse_request(request)
         client_sock.send(response.encode())
