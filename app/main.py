@@ -45,7 +45,7 @@ def parse_request(request):
     print(request)
     print(request[1])
     print(request.split()[0])
-    print(request.split()[:1])
+    print(request.split()[0][:3])
 
     path = 1
     if request[path] == "/" and request[0] == 'GET':
