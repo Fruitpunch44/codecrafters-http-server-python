@@ -87,10 +87,7 @@ def parse_request(request):
         try:
             with open(file_path, 'w') as file:
                 new = files.lstrip('/').split('_')
-                print(new)  # debugging
                 string = " ".join(new)
-                print(string)
-                print(len(string))
                 file.write(string)
             return 'HTTP/1.1 201 Created\r\n\r\n'
         except Exception as e:
