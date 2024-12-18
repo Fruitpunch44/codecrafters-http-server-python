@@ -51,9 +51,10 @@ def parse_request(request):
 
     elif request[path].startswith('/echo/') and request[0] == 'GET':
         value = request[1][6:]
-        print(value)
+        gzip = accept_gzip(request)
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
-        return res
+        return gzip, res
+
 
     elif request[path].startswith('/user-agent') and request[0] == 'GET':
         value = request[6]
