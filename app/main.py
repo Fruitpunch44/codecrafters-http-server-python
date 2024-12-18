@@ -18,23 +18,29 @@ def handle_client(client_sock):
 
     while True:
 
-        request = client_sock.recv(4096).decode()
+        request = client_sock.recv(4096).decode().split()
         if not request:
             break
         # debugging purposes
-        print(f'{request}')
+        print(f'{request}\n'
+              f'{request[1]} \n '
+              f'{request[1][6:]}\n')
         parse_headers(request)
+        gzip=accept_gzip(parse_headers)
+        response = parse_request(request)
+        client_sock.send(response.encode())
+        client_sock.send(gzip.encode())
 
 
 def parse_headers(request):
     fields = "".join(request)
     fields = fields.split('\r\n')
-    fields = fields[2:]
+    fields = fields[1:]
     headers = {}
     for field in fields:
         if ':' in field:
             key, value = field.split(":", 1)
-            headers[key.strip()] = value.strip()
+            headers[key] = value
     for key, value in headers.items():
         print(f'{key}:{value}')
     return headers
@@ -105,6 +111,8 @@ def accept_gzip(request):
         print(f'{key}:{value}')
     if head['Accept-Encoding'] == 'gzip':
         return 'HTTP/1.1 200 OK\r\n\r\n'
+    else:
+        return 'sorry'
 
 
 def main():
