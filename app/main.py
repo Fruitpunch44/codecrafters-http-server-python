@@ -96,7 +96,7 @@ def parse_request(request):
             print(f'{e}')
 
     elif request[0].startswith('GET'):
-        gzip=accept_gzip(request)
+        gzip = accept_gzip(request)
         return gzip
 
     else:
