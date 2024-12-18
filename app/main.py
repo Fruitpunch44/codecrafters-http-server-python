@@ -24,7 +24,7 @@ def handle_client(client_sock):
         # debugging purposes
         print(f'{request}')
         print(request.split())
-        response=parse_request(request)
+        response = parse_request(request)
         client_sock.send(response.encode())
 
 
@@ -45,7 +45,6 @@ def parse_request(request):
     # not optimal but a path is usally on index 1
     global File_dir
     request.split()
-    print(request)
     path = 1
     if request[path] == "/" and request[0] == 'GET':
         return 'HTTP/1.1 200 OK\r\n\r\n'
@@ -108,8 +107,10 @@ def show_clients():
 def accept_gzip(request):
     headers = parse_headers(request)
     if 'Accept-Encoding' in headers and "gzip" in headers['Accept-Encoding']:
-        return ('HTTP/1.1 200 OK\r\n'
-                'Content-Encoding: gzip\r\n\r\n')
+        res = ('HTTP/1.1 200 OK\r\n'
+               'Content-Encoding: gzip\r\n\r\n')
+        return res
+
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
