@@ -43,7 +43,8 @@ def parse_request(request):
     # not optimal but a path is usally on index 1
     global File_dir
     print(request)
-    print(request.split[0])
+    me=request.split[0]
+    print(me)
     path = 1
     if request[path] == "/" and request[0] == 'GET':
         return 'HTTP/1.1 200 OK\r\n\r\n'
