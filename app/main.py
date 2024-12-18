@@ -27,7 +27,7 @@ def handle_client(client_sock):
               f'{request[1][6:]}\n')
         response = parse_request(request)
         client_sock.send(response.encode())
-        parse_headers(request)
+        print(parse_headers(request))
 
 
 def parse_headers(request):
