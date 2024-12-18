@@ -67,7 +67,7 @@ def parse_request(request):
                 content = file.read()
                 res = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(content)}\r\n\r\n{content}"
                 return res
-        except Exception as e:
+        except FileNotFoundError:
             return f"HTTP/1.1 404 Not Found\r\n\r\n"
 
     elif request[0].startswith("POST"):
@@ -77,14 +77,17 @@ def parse_request(request):
         files = " ".join(request[9:])  # read the data being sent by the post request
         file_path = os.path.join(directory, path)
         print(file_path)  # debugging
-        with open(file_path, 'w') as file:
-            new = files.lstrip('/').split('_')
-            print(new)
-            string = " ".join(new)
-            print(string)
-            print(len(string))
-            file.write(string)
-        return 'HTTP/1.1 201 Created\r\n\r\n'
+        try:
+            with open(file_path, 'w') as file:
+                new = files.lstrip('/').split('_')
+                print(new)
+                string = " ".join(new)
+                print(string)
+                print(len(string))
+                file.write(string)
+            return 'HTTP/1.1 201 Created\r\n\r\n'
+        except Exception as e:
+            print(f'{e}')
     else:
         return 'HTTP/1.1 404 Not Found\r\n\r\n'
 
