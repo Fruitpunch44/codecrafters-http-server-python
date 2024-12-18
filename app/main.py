@@ -23,7 +23,7 @@ def handle_client(client_sock):
             break
         # debugging purposes
         print(f'{request}')
-        print(parse_headers(request))
+        parse_headers(request)
 
 
 def parse_headers(request):
