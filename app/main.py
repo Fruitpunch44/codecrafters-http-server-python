@@ -43,6 +43,7 @@ def parse_request(request):
     # not optimal but a path is usally on index 1
     global File_dir
     print(request)
+    print(request[1])
     print(request.split()[0])
 
     path = 1
@@ -53,7 +54,7 @@ def parse_request(request):
         value = request[1][6:]
         gzip = accept_gzip(request)
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
-        return gzip and res
+        return gzip or re
 
 
     elif request[path].startswith('/user-agent') and request.split()[0] == 'GET':
