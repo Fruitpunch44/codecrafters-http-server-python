@@ -2,10 +2,11 @@ import socket  # noqa: F401
 import threading
 import sys
 import os
+import argparse
 
 connected_client = []
 lock = threading.Lock()
-
+File_dir=''
 
 def handle_client(client_sock):
     with lock:
@@ -42,6 +43,7 @@ def parse_headers(request):
 
 def parse_request(request):
     # not optimal but a path is usally on index 1
+    global  File_dir
     path = 1
     if request[path] == "/" and request[0] == 'GET':
         return 'HTTP/1.1 200 OK\r\n\r\n'
@@ -71,12 +73,12 @@ def parse_request(request):
             return f"HTTP/1.1 404 Not Found\r\n\r\n"
 
     elif request[0].startswith("POST"):
-        directory = sys.argv[2]
+        directory = File_dir
         print(directory)  # debugging
         path = request[1]
         print(path)
         files = " ".join(request[9:])  # read the data being sent by the post request
-        file_path = os.path.join(directory, path)
+        file_path = f'{directory}{path}'
         print(file_path)  # debugging
         try:
             with open(file_path, 'w') as file:
@@ -101,6 +103,15 @@ def show_clients():
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
     print("Logs from your program will appear here!")
+
+    parser=argparse.ArgumentParser('a simple http server')
+    parser.add_argument("-d", "--directory")
+    args=parser.parse_args()
+
+    if 'directory' in args:
+        global File_dir
+        File_dir=args.directory
+
 
     server_socket = socket.create_server(("localhost", 4221), reuse_port=False)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
