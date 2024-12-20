@@ -46,7 +46,7 @@ def parse_request(request):
     print(request[1])
     print(request.split())
     print(request.split()[0])
-    print(request.strip()[1][6:])
+    print(request.split()[1][6:].strip('/'))
 
     path = 1
     filename = request[1][6:]
