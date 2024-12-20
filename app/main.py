@@ -115,7 +115,7 @@ def show_clients():
 
 def accept_gzip(request):
     body = request.split()[1][6:]
-    print(body)
+    print(f'sucka:{body}')
     headers = parse_headers(request)
     if 'Accept-Encoding' in headers:
         if 'gzip' in headers['Accept-Encoding']:
