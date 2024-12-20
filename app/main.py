@@ -23,8 +23,7 @@ def handle_client(client_sock):
         # debugging purposes
         print(f'{request}')
         response = parse_request(request)
-        client_sock.send(response)
-        print(f'response {client_sock.send(response.encode())}')
+        client_sock.send(response.encode())
 
 
 def parse_headers(request):
@@ -123,7 +122,7 @@ def accept_gzip(request):
             print(f'compressed_message={compressed}')
             print(f'decoded:{compressed.hex()}')
             print(f'length_of_compressed:{len(compressed)}')
-            res = b'HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Length: ' + str(len(compressed)).encode() + b'\r\n\r\n' + compressed
+            res = 'HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Length: ' + str(len(compressed)) + '\r\n\r\n' + str(compressed)
             return res
     return None
 
