@@ -68,7 +68,7 @@ def parse_request(request):
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
         return res
 
-    elif request.[path].startswith('/files/') and request.split()[0] == 'GET':
+    elif request[path].startswith('/files/') and request.split()[0] == 'GET':
         # it's reading from their servers not my local computer fyml
         try:
             directory = sys.argv[2]
