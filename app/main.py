@@ -46,6 +46,7 @@ def parse_request(request):
     print(request[1])
     print(request.split()[0])
     print(request.split()[0][:3])
+    print(parse_headers(request))
 
     path = 1
     filename = request[1][6:]
@@ -109,6 +110,8 @@ def accept_gzip(request):
     if 'Accept-Encoding' in headers:
         res = 'HTTP/1.1 200 OK\r\nContent-Encoding:gzip\r\n\r\n'
         return res
+    else :
+        return 'this acctually fucking blows '
 
 
 def main():
