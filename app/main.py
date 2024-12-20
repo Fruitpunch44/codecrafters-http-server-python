@@ -115,16 +115,15 @@ def show_clients():
 
 def accept_gzip(request):
     body = request.split()[1][6:]
-    print(f'sucka:{body}')
+    print(f'message:{body}')
     headers = parse_headers(request)
     if 'Accept-Encoding' in headers:
         if 'gzip' in headers['Accept-Encoding']:
             compressed = gzip.compress(body.encode())
             print(f'length_of_compressed:{len(compressed)}')
-            res = f'HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Length: {len(compressed)}\r\n\r\n' + compressed.decode('latin1')
-            print(f'response:{res}')
-            return res
-
+            res = b'HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Length: ' + str(len(compressed)).encode(
+                'utf-8') + b'\r\n\r\n' + compressed
+            return res.decode('latin1')
     return None
 
 
