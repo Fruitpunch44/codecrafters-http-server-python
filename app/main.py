@@ -85,20 +85,20 @@ def parse_request(request):
 
     elif request.split()[0].startswith("POST"):
         directory = File_dir
-        print(directory)  # debugging
+        print(f'directory_loc:{directory}')  # debugging
         path = request.split()[1][6:].strip('/')
-        print(path)  # debugging
+        print(f'path:{path}')  # debugging
         files = " ".join(request[8:])
         # read the data being sent by the post-request
         print(files)
         file_path = f'{directory}{path}'
-        print(file_path)  # debugging
+        print(f'path: {file_path}')  # debugging
         try:
             with open(file_path, 'w') as file:
                 new = files.lstrip('/').split('_')
-                print(new)
+                print(f'new:{new}')
                 string = " ".join(new)
-                print(string)
+                print(f'string to save: {string}')
                 file.write(string)
             return 'HTTP/1.1 201 Created\r\n\r\n'
         except Exception as e:
