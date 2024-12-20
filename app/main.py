@@ -106,7 +106,7 @@ def show_clients():
 
 def accept_gzip(request):
     headers = parse_headers(request)
-    if 'Accept-Encoding' in headers and "gzip" in headers['Accept-Encoding']:
+    if headers['Accept-Encoding']:
         res = 'HTTP/1.1 200 OK\r\nContent-Encoding:gzip\r\n\r\n'
         return res
 
