@@ -62,7 +62,7 @@ def parse_request(request):
 
 
     elif request.split()[path].startswith('/user-agent') and request.split()[0] == 'GET':
-        value = request[6]
+        value = request.split()[6]
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
         return res
 

@@ -1,4 +1,2 @@
-request='This is a string'
-path=1
-if request.split()[path].startswith('is'):
-    print('yay')
+request='pineapple/raspberry-blueberry'
+print(len(request))
