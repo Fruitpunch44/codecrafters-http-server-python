@@ -121,7 +121,7 @@ def accept_gzip(request):
         if 'gzip' in headers['Accept-Encoding']:
             compressed = gzip.compress(body.encode())
             print(f'compressed_message={compressed}')
-            print(f'decoded:{compressed.decode('latin1')}')
+            print(f'decoded:{compressed.hex()}')
             print(f'length_of_compressed:{len(compressed)}')
             res = b'HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Length: ' + str(len(compressed)).encode(
                 'utf-8') + b'\r\n\r\n' + compressed
