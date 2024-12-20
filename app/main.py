@@ -72,7 +72,7 @@ def parse_request(request):
         # it's reading from their servers not my local computer fyml
         try:
             directory = sys.argv[2]
-            file = request[path][7:]
+            file = request.split()[path][7:]
             print(f'file:{file}')
             file_path = os.path.join(directory, file)
             print(f'path{file_path}')
