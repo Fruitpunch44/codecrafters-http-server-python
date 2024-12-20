@@ -44,10 +44,10 @@ def parse_request(request):
     global File_dir
     print(request)
     print(request[1])
+    print(request.split())
     print(request.split()[0])
     print(request.split()[0][:3])
     print(request.strip()[1][6:].strip('/'))
-    print(parse_headers(request))
 
     path = 1
     filename = request[1][6:]
