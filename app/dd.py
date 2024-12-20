@@ -1,2 +1,4 @@
-request='pineapple/raspberry-blueberry'
-print(len(request))
+binary=b'\x1f\x8b\x08\x00\xbd\xf3eg\x02\xffK\xca)MMJ-*\xaa\x04\x00\xd3$\x1ey\t\x00\x00\x00'
+
+me=binary.decode('latin1')
+print(me.encode())
