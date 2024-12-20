@@ -5,16 +5,14 @@ import os
 import argparse
 
 connected_client = []
-lock = threading.Lock()
 File_dir = ''
 
 
 def handle_client(client_sock):
-    with lock:
-        if client_sock not in connected_client:
-            connected_client.append(client_sock)
-        else:
-            print('client is already in connected list')
+    if client_sock not in connected_client:
+        connected_client.append(client_sock)
+    else:
+        print('client is already in connected list')
 
     while True:
 
@@ -50,7 +48,7 @@ def parse_request(request):
 
     path = 1
     filename = request[1][6:]
-    if request[path] == "/" and request[0] == 'GET':
+    if request.split()[path] == "/" and request.split()[0] == 'GET':
         return 'HTTP/1.1 200 OK\r\n\r\n'
 
     elif request.split()[path].startswith(f'/echo/{filename}') and request.split()[0] == 'GET':
