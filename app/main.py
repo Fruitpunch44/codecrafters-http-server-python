@@ -110,7 +110,7 @@ def accept_gzip(request):
     if 'Accept-Encoding' in headers:
         res = 'HTTP/1.1 200 OK\r\nContent-Encoding:gzip\r\n\r\n'
         return res
-    elif 'gzip' not in headers.values():
+    elif ' gzip' not in headers.values():
         return 'HTTP/1.1 200 OK\r\n'
     else:
         return 'no Accept-Encoding headers'
