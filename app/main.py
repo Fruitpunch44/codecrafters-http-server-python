@@ -23,7 +23,7 @@ def handle_client(client_sock):
         # debugging purposes
         print(f'{request}')
         response = parse_request(request)
-        client_sock.send(response.encode('utf-8'))
+        client_sock.send(response)
         print(f'response {client_sock.send(response.encode())}')
 
 
