@@ -86,7 +86,7 @@ def parse_request(request):
     elif request.split()[0].startswith("POST"):
         directory = File_dir
         print(directory)  # debugging
-        path = request.strip()[1][6:].strip('/')
+        path = request.split()[1][6:].strip('/')
         print(path)  # debugging
         files = " ".join(request[9:])  # read the data being sent by the post-request
         file_path = f'{directory}{path}'
