@@ -56,7 +56,10 @@ def parse_request(request):
     elif request.split()[path].startswith(f'/echo/{filename}') and request.split()[0] == 'GET':
         value = request[1][6:]
         gzip = accept_gzip(request)
-        return gzip
+        if gzip:
+            return gzip
+        else:
+            return 'HTTP/1.1 200 OK\r\n\r\n'
 
 
 
@@ -112,7 +115,7 @@ def accept_gzip(request):
             res = 'HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\n\r\n'
             return res
 
-    return 'HTTP/1.1 200 OK\r\n'
+    return None
 
 
 def main():
