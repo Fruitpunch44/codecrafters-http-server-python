@@ -2,6 +2,7 @@ import socket  # noqa: F401
 import threading
 import sys
 import os
+import gzip
 import argparse
 
 connected_client = []
@@ -113,10 +114,12 @@ def show_clients():
 
 
 def accept_gzip(request):
+    body=request.split()[1][6:]
     headers = parse_headers(request)
     if 'Accept-Encoding' in headers:
         if 'gzip' in headers['Accept-Encoding']:
-            res = 'HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\n\r\n'
+            response=gzip.compress(body)
+            res = 'HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\n\r\n' + str(response)
             return res
 
     return None
