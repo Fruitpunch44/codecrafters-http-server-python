@@ -23,7 +23,7 @@ def handle_client(client_sock):
         # debugging purposes
         print(f'{request}')
         response = parse_request(request)
-        client_sock.send(response.encode())
+        client_sock.send(response.encode('utf-8'))
         print(f'response {client_sock.send(response.encode())}')
 
 
@@ -54,9 +54,9 @@ def parse_request(request):
 
     elif request.split()[path].startswith(f'/echo/{filename}') and request.split()[0] == 'GET':
         value = request.split()[1][6:]
-        gzip = accept_gzip(request)
-        if gzip:
-            return gzip
+        gzip_header_present = accept_gzip(request)
+        if gzip_header_present:
+            return gzip_header_present
         else:
             return f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
 
