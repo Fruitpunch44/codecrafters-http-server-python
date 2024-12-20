@@ -122,7 +122,7 @@ def accept_gzip(request):
             response = gzip.compress(body.encode('utf-8'))
             print(f'length{len(response)}')
             res = f'HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Length: {len(response)}\r\n\r\n' + response.decode('latin1')
-            print(res)
+            print(f'response:{res}')
             return res
 
     return None
