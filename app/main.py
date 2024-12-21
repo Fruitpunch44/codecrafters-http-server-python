@@ -23,10 +23,11 @@ def handle_client(client_sock):
         # debugging purposes
         print(f'{request}')
         response = parse_request(request)
-        if isinstance(response,bytes):
+        if isinstance(response, bytes):
             client_sock.sendall(response)
         else:
             client_sock.send(response.encode())
+
 
 def parse_headers(request):
     fields = request.split('\r\n')
@@ -123,7 +124,7 @@ def accept_gzip(request):
                 f'{compressed}'
             )
             print(f"response to send: {res}")
-            return res.encode("utf-8")
+            return res.encode()
     return None
 
 
