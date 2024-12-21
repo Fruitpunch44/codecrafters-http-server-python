@@ -23,8 +23,10 @@ def handle_client(client_sock):
         # debugging purposes
         print(f'{request}')
         response = parse_request(request)
-        client_sock.sendall(response.encode())
-
+        if isinstance(response,bytes):
+            client_sock.sendall(response)
+        else:
+            client_sock.send(response.encode())
 
 def parse_headers(request):
     fields = request.split('\r\n')
@@ -109,7 +111,7 @@ def accept_gzip(request):
     headers = parse_headers(request)
     if 'Accept-Encoding' in headers:
         if 'gzip' in headers['Accept-Encoding']:
-            compressed = gzip.compress(body.encode())
+            compressed = gzip.compress(body.encode('utf-8'))
             print(f'compressed_message={compressed}')
             print(f'decoded:{compressed.hex()}')
             print(f'length_of_compressed:{len(compressed)}')
@@ -118,10 +120,10 @@ def accept_gzip(request):
                 'Content-Encoding: gzip\r\n'
                 f'Content-Length: {len(compressed)}\r\n'
                 '\r\n'
-                f'{compressed.hex()}'
+                f'{compressed}'
             )
             print(f"response to send: {res}")
-            return res
+            return res.encode("utf-8")
     return None
 
 

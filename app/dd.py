@@ -1,9 +1,4 @@
 import gzip
+me=b'\x1f\x8b\x08\x00\xdd\xb2fg\x02\xffKJ\xcc\x03B\x00\xcfg\x8b\x03\x06\x00\x00\x00'
 
-
-stringme= "hello therer how can i help"
-
-zipped=gzip.compress(stringme.encode())
-print(zipped)
-on=zipped.hex()
-print(on)
+print(len(me))
