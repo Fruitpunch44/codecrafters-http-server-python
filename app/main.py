@@ -23,7 +23,7 @@ def handle_client(client_sock):
         # debugging purposes
         print(f'{request}')
         response = parse_request(request)
-        client_sock.send(response.encode())
+        client_sock.sendall(response.encode())
 
 
 def parse_headers(request):
@@ -59,23 +59,16 @@ def parse_request(request):
         else:
             return f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
 
-
-
     elif request.split()[path].startswith('/user-agent') and request.split()[0] == 'GET':
         value = request.split()[6]
         res = f'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length:{len(value)}\r\n\r\n{value}'
         return res
 
     elif request.split()[path].startswith('/files/') and request.split()[0] == 'GET':
-        # it's reading from their servers not my local computer fyml
         try:
             directory = sys.argv[2]
             file = request.split()[path][7:]
-            print(f'file:{file}')
             file_path = os.path.join(directory, file)
-            print(f'path{file_path}')
-
-            print(f'{file_path}')
             with open(file_path, 'r') as file:
                 content = file.read()
                 res = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(content)}\r\n\r\n{content}"
@@ -96,9 +89,7 @@ def parse_request(request):
         try:
             with open(file_path, 'w') as file:
                 new = files.lstrip('/').split('_')
-                print(f'new:{new}')
                 string = " ".join(new)
-                print(f'string to save: {string}')
                 file.write(string)
             return 'HTTP/1.1 201 Created\r\n\r\n'
         except Exception as e:
